@@ -13,7 +13,7 @@ AInteractable::AInteractable()
 	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collider"));
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	StaticMesh->SetupAttachment(SphereCollider);
-
+	/*PlayerCharacter->Cast*/
 }
 
 // Called when the game starts or when spawned

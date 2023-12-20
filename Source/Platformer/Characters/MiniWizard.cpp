@@ -25,7 +25,7 @@ AMiniWizard::AMiniWizard()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
-
+	CoinCount = 0;
 }
 
 // Called when the game starts or when spawned
@@ -46,8 +46,8 @@ void AMiniWizard::Tick(float DeltaTime)
 void AMiniWizard::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis("MoveForward", this, &AMiniWizard::HorizontalMovement);
-	PlayerInputComponent->BindAxis("MoveRight", this, &AMiniWizard::VerticalMovement);
+	PlayerInputComponent->BindAxis("MoveForward", this, &AMiniWizard::VerticalMovement);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AMiniWizard::HorizontalMovement);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AMiniWizard::MouseVertical);
 	PlayerInputComponent->BindAxis("TurnRate", this, &AMiniWizard::MouseHorizontal);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
@@ -93,4 +93,20 @@ void AMiniWizard::MouseHorizontal(float Value)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Value * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+
+}
+
+int AMiniWizard::GetCoinCount()
+{
+	return CoinCount;
+}
+
+void AMiniWizard::TakeCoins(int coin)
+{
+	CoinCount = CoinCount - coin;
+}
+
+void AMiniWizard::AddCoin()
+{
+	CoinCount += 1;
 }
