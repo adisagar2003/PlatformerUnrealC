@@ -29,7 +29,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CharacterMesh)
 		class USkeletalMeshComponent* SkeletalMesh; // Skeletalmesh
 
+	// Reference to UMG Asset in the editor //
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Widgets")
+	TSubclassOf<class UUserWidget> HUDOverlayAsset;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	class UUserWidget* HUDOverlay;
 
 public:	
 	// Called every frame

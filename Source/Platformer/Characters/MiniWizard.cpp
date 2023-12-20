@@ -8,6 +8,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMiniWizard::AMiniWizard()
@@ -33,6 +35,13 @@ void AMiniWizard::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Setting up user interface
+	if (HUDOverlayAsset)
+	{
+		HUDOverlay->AddToViewport();
+		HUDOverlay->SetVisibility(ESlateVisibility::Visible);
+	}
+
 }
 
 // Called every frame
