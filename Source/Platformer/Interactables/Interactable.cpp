@@ -13,7 +13,6 @@ AInteractable::AInteractable()
 	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collider"));
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	StaticMesh->SetupAttachment(SphereCollider);
-	SphereCollider->OnComponentBeginOverlap.AddDynamic(this, &AInteractable::OnCollisionEnterFunction);
 
 }
 
@@ -21,7 +20,8 @@ AInteractable::AInteractable()
 void AInteractable::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SphereCollider->OnComponentBeginOverlap.AddDynamic(this, &AInteractable::OnCollisionEnterFunction);
+	UE_LOG(LogTemp, Warning, TEXT("Coin"));
 }
 
 // Called every frame
