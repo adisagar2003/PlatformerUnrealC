@@ -40,12 +40,21 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MouseControl)
 		float BaseLookUpRate;
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats)
+		int CoinCount;
 	void HorizontalMovement(float Value);
 	void VerticalMovement(float Value);
 	void MouseVertical(float Value);
 	void MouseHorizontal(float Value);
+	UFUNCTION(BlueprintCallable)
+		int GetCoinCount();
+	UFUNCTION(BlueprintCallable)
+		void TakeCoins(int coin);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	UFUNCTION(BlueprintCallable)
+		void AddCoin();
+	
+	
+	
 };
