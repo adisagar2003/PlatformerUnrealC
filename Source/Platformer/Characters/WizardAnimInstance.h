@@ -24,6 +24,9 @@ public:
 		bool isWalking;
 
 	UPROPERTY(BlueprintReadOnly)
+		bool isFalling;
+
+	UPROPERTY(BlueprintReadOnly)
 		float MovementSpeed = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement)

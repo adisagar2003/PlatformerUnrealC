@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Widgets")
 	TSubclassOf<class UUserWidget> HUDOverlayAsset;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UPROPERTY(EditAnywhere, Category = "Widgets")
 	class UUserWidget* HUDOverlay;
 
 public:	
@@ -59,6 +59,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	UFUNCTION(BlueprintCallable)
 		void AddCoin();
+	
+	// Jump the character
+	UFUNCTION(BlueprintCallable)
+		void JumpCharacter();
 	
 	
 	
