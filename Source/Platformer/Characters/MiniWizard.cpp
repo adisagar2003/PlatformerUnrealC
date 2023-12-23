@@ -36,7 +36,7 @@ void AMiniWizard::BeginPlay()
 	Super::BeginPlay();
 	
 	// Setting up user interface
-	if (HUDOverlayAsset)
+	if (HUDOverlayAsset && HUDOverlay!=nullptr)
 	{
 		HUDOverlay->AddToViewport();
 		HUDOverlay->SetVisibility(ESlateVisibility::Visible);
@@ -61,6 +61,7 @@ void AMiniWizard::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("TurnRate", this, &AMiniWizard::MouseHorizontal);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &AMiniWizard::JumpCharacter);
 }
 
 void AMiniWizard::HorizontalMovement(float Value)
@@ -118,4 +119,9 @@ void AMiniWizard::TakeCoins(int coin)
 void AMiniWizard::AddCoin()
 {
 	CoinCount += 1;
+}
+
+void AMiniWizard::JumpCharacter()
+{
+	ACharacter::Jump();
 }

@@ -2,6 +2,7 @@
 
 
 #include "WizardAnimInstance.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 void UWizardAnimInstance::NativeInitializeAnimation()
 {
@@ -21,10 +22,11 @@ void UWizardAnimInstance::UpdateAnimInstance()
 
 	if (Pawn)
 	{
+		isFalling = Pawn->GetMovementComponent()->IsFalling();
 		FVector Speed = Pawn->GetVelocity();
 		FVector LateralSpeed = FVector(Speed.X, Speed.Y, 0.f);
 		MovementSpeed = LateralSpeed.Size();
-		if (MovementSpeed > 4.0f)
+		if (MovementSpeed > 4.0f && !isFalling)
 		{
 			isWalking = true;
 		}
