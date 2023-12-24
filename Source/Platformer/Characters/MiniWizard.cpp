@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "Animation/AnimMontage.h"
 
 // Sets default values
 AMiniWizard::AMiniWizard()
@@ -26,9 +27,13 @@ AMiniWizard::AMiniWizard()
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-	FollowCamera->bUsePawnControlRotation = false;
 	CoinCount = 0;
+	Health = 1.0f;
+
+	
 }
+
+
 
 // Called when the game starts or when spawned
 void AMiniWizard::BeginPlay()
@@ -40,6 +45,7 @@ void AMiniWizard::BeginPlay()
 	{
 		HUDOverlay->AddToViewport();
 		HUDOverlay->SetVisibility(ESlateVisibility::Visible);
+	
 	}
 
 }
@@ -125,3 +131,35 @@ void AMiniWizard::JumpCharacter()
 {
 	ACharacter::Jump();
 }
+
+float AMiniWizard::GetHealth()
+{
+
+	return Health;
+}
+
+void AMiniWizard::TakeDamage(float Damage)
+{
+	Health -= Damage;
+	if (Health <= 0)
+	{
+		DeathEvent.Broadcast();
+	}
+}
+
+
+// Death 
+
+void AMiniWizard::Death()
+{
+
+	
+
+}
+
+
+
+
+
+
+
