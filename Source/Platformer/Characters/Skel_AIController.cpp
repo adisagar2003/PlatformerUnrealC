@@ -15,7 +15,7 @@
 ASkel_AIController::ASkel_AIController(FObjectInitializer const& ObjectInitializer)
 {
 	SetupPerceptionSystem();
-	SetupStimulusSource();
+
 }
 
 void ASkel_AIController::OnPossess(APawn* InPawn)
@@ -28,6 +28,7 @@ void ASkel_AIController::OnPossess(APawn* InPawn)
 		if (UBehaviorTree* const tree = npc->GetBehaviorTree())
 		{
 			UBlackboardComponent* b;
+			ControlledPawn = npc;
 			UseBlackboard(tree->BlackboardAsset, b);
 			Blackboard = b;
 			RunBehaviorTree(tree);
@@ -43,7 +44,7 @@ void ASkel_AIController::SetupPerceptionSystem()
 	if (SightConfig)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-		SightConfig->SightRadius= 500.f;
+		SightConfig->SightRadius= 1000.f;
 		SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.f;
 		SightConfig->PeripheralVisionAngleDegrees = 90.f;
 		SightConfig->SetMaxAge(5.f);
@@ -63,11 +64,26 @@ void ASkel_AIController::SetupPerceptionSystem()
 void ASkel_AIController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
 {
 	// Setting the blackboard value of can see player to true
-	if (auto* const Enemy = Cast<ASkel>(Actor))
+	
+	FString ActorName = ControlledPawn->GetName();
+	if (ControlledPawn)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message! %s"), Stimulus.WasSuccessfullySensed());
-		GetBlackboardComponent()->SetValueAsBool("CanSeePlayer", Stimulus.WasSuccessfullySensed());
+		if (ASkel* const npc = Cast<ASkel>(ControlledPawn))
+		{
+			if (Stimulus.WasSuccessfullySensed())
+			{
+				// get blackboard variable
+				GetBlackboardComponent()->SetValueAsBool("CanSeePlayer", true);
+				UE_LOG(LogTemp, Error,TEXT("Should change BT"));
+			}
+			else {
+				GetBlackboardComponent()->SetValueAsBool("CanSeePlayer", false);
+			}
+			UE_LOG(LogTemp, Warning, TEXT("Warning here "));
+			
+		}
 	}
+
 }
 
 void ASkel_AIController::SetupStimulusSource()
@@ -76,6 +92,7 @@ void ASkel_AIController::SetupStimulusSource()
 	{
 		StimulusSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 		StimulusSource->RegisterWithPerceptionSystem();
+		
 	}
 
 }

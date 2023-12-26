@@ -20,11 +20,11 @@ protected:
 	virtual void OnPossess(APawn* InPawn) override;
 	// Setting up sight configuration 
 	class UAISenseConfig_Sight* SightConfig;
-	
+	class APawn* ControlledPawn;
 	void SetupPerceptionSystem();
 
 	UFUNCTION()
-		void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus);
+	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus);
 
 	class UAIPerceptionStimuliSourceComponent* StimulusSource;
 	void SetupStimulusSource();
