@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SceneComponent.h"
 #include "Animation/AnimMontage.h"
 
 // Sets default values
@@ -23,13 +24,13 @@ AMiniWizard::AMiniWizard()
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->TargetArmLength = 800.0f; // distance third person is from the camera
 	SpringArm->bUsePawnControlRotation = true; // Rotate the arm based on the controller
-	
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 	CoinCount = 0;
 	Health = 1.0f;
 
+	
 	
 }
 
@@ -48,6 +49,8 @@ void AMiniWizard::BeginPlay()
 	
 	}
 
+	// Attach staff to wizard
+	SkeletalMesh->AttachToComponent(MeshComponent, FAttachmentTransformRules::KeepWorldTransform, FName("Weapon Socket"));
 }
 
 // Called every frame
@@ -145,6 +148,11 @@ void AMiniWizard::TakeDamage(float Damage)
 	{
 		DeathEvent.Broadcast();
 	}
+	if (HurtAnimation)
+	{
+		this->PlayAnimMontage(HurtAnimation);
+	}
+	
 }
 
 
