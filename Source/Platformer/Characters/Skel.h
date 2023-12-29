@@ -21,6 +21,30 @@ protected:
 	virtual void BeginPlay() override;
 	class UAIPerceptionStimuliSourceComponent* StimulusSource;
 	void SetupStimulusSource();
+
+	// Health and combat
+	float Health;
+	UFUNCTION(BlueprintCallable, Category=HealthAndCombat)
+	void TakeDamage(float Damage);
+	void Death();
+
+	// Animations
+	UPROPERTY(EditAnywhere, Category = Animations)
+		class UAnimMontage* DeathAnimation;
+
+	UPROPERTY(EditAnywhere, Category = Animations)
+		class UAnimMontage* AttackAnim;
+
+	// Collider for detection of range
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		bool IsPlayerInAttackRange;
+
+	// Sphere Collider 
+	UPROPERTY(EditAnywhere, Category = HealthAndCombat)
+		class USphereComponent* SphereCollider;
+
+	UFUNCTION(BlueprintCallable)
+		void DisableAttackMode(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -31,6 +55,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* Tree;
 	
+private:
+	void SetAttackMode(UPrimitiveComponent* OverlappedComponent,AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 
 };

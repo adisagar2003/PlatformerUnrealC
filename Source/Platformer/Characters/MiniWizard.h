@@ -30,9 +30,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Camera)
 		class USpringArmComponent* SpringArm;  // Camera springarm used for camera shake effects
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CharacterMesh)
+	UPROPERTY(EditAnywhere, Category = CharacterMesh)
 		class USkeletalMeshComponent* SkeletalMesh; // Skeletalmesh
 
+	// Weapons
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapons)
+		class UStaticMeshComponent* MeshComponent;
 	// Reference to UMG Asset in the editor //
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Widgets")
 	TSubclassOf<class UUserWidget> HUDOverlayAsset;
@@ -40,8 +43,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	class UUserWidget* HUDOverlay;
 
+	// Death animation
 	UPROPERTY(EditAnywhere, Category = "Montages")
 		class UAnimMontage* DeathAnimation;
+
+	// Take damage animation
+	UPROPERTY(EditAnywhere, Category = "Montages")
+		class UAnimMontage* HurtAnimation;
+
+
+	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
